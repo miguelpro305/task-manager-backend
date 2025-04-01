@@ -1,17 +1,19 @@
-# Imagen base con Python 3.10
 FROM python:3.10
-
-# Configurar el directorio de trabajo en Docker
 WORKDIR /app
 
-# Copiar archivos del proyecto a la imagen de Docker
-COPY . .
+# Set Python path and prevent .pyc files
+ENV PYTHONPATH=/app \
+    PYTHONDONTWRITEBYTECODE=1
 
-# Instalar dependencias
+# Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exponer el puerto 8000 para FastAPI
-EXPOSE 8000
+# Copy application
+COPY . .
 
-# Comando para iniciar la API
+# Health check (optional)
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/ || exit 1
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
