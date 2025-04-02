@@ -7,7 +7,7 @@ app = FastAPI()
 # Permitir peticiones desde el frontend (especificando la IP)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://54.83.107.93"],  # Permite solo solicitudes desde esa IP
+    allow_origins=["*"],  # Permite solo solicitudes desde esa IP
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos HTTP (GET, POST, DELETE, etc.)
     allow_headers=["*"],  # Permite todos los encabezados
