@@ -4,14 +4,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Permitir peticiones desde el frontend
+# Permitir peticiones desde el frontend (especificando la IP)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://54.83.107.93"],  # Permite solo solicitudes desde esa IP
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos HTTP (GET, POST, DELETE, etc.)
     allow_headers=["*"],  # Permite todos los encabezados
 )
+
 @app.get("/")
 def read_root():
     return {"message": "Bienvenido a la API de gestión de tareas"}
